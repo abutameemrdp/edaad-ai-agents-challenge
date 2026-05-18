@@ -3,21 +3,26 @@
 
 Welcome to the official repository of **Edaad AI Agents System** designed for the **Google for Startups AI Agents Challenge**.
 
-Edaad AI leverages Google's state-of-the-art **Gemini API** and **Vertex AI** capabilities to build a production-grade, highly reliable **Multi-Agent Educational System**. This system coordinates multiple intelligent agents to deliver real-time personalized Socratic tutoring, continuous cognitive diagnosis, and autonomous remedial course generation for students, with a live telemetry dashboard for teachers.
+Edaad AI leverages Google's **Gemini API** (via `@google/genai` SDK) and **Supabase Edge Functions** as the serverless orchestration layer to build a production-grade **Multi-Agent Educational System**. This system coordinates multiple intelligent agents — each with a dedicated system prompt and strict structured JSON schema — to deliver real-time personalized Socratic tutoring, continuous cognitive diagnosis, and autonomous remedial course generation for students, with a live telemetry dashboard for teachers.
+
+> **⚠️ Technical Accuracy Note for Reviewers:** The agents in this system are **custom-built within our own platform infrastructure** using the Google Gen AI SDK (`@google/genai`). We do NOT use the Vertex AI Agent Development Kit (ADK) directly; instead, we implement the **same multi-agent orchestration patterns** (structured outputs, function calling, chained reasoning) natively within our Angular + Supabase Edge Function architecture. This gives us full control over agent behavior, cost optimization, and pedagogical tuning.
 
 ---
 
 ## 🎨 Core Architecture (The Multi-Agent Core)
 
-Our implementation models two main cooperative agents using the **Vertex AI Agent Development Kit (ADK)** logic:
+Our implementation coordinates two main cooperative agents using **Gemini API Function Calling** and **Structured JSON Schema enforcement**:
 
 ```mermaid
 graph TD
-    Student[Student Query] --> Socrates[Socrates-Edaad: Socratic Tutor Agent]
-    Socrates -->|1. structured JSON Socratic response| Student
+    Student[Student Query] --> Angular[Angular Frontend]
+    Angular -->|Supabase Functions SDK| EdgeFn[Supabase Edge Function: ai-orchestrator]
+    EdgeFn -->|@google/genai SDK| Gemini[Gemini API: gemini-2.0-flash / 2.5-flash]
+    Gemini -->|Structured JSON Response| Socrates[Socrates-Edaad: Socratic Tutor Agent]
+    Socrates -->|1. Socratic response to student| Student
     Socrates -->|2. dialogue metadata & note| Diagnostician[Diagnostician-Edaad: Diagnostic Agent]
     Diagnostician -->|3. evaluates knowledge gaps| Orchestrator[Edaad AI Orchestrator]
-    Orchestrator -->|4. Gemini tool call triggers| Supabase[Supabase Realtime Database]
+    Orchestrator -->|4. Gemini Function Call triggers| Supabase[Supabase Realtime Database]
     Supabase -->|5. push telemetry| Teacher[Teacher Screen: Real-Time Live Monitoring]
     Supabase -->|6. triggers generation| RemedialBuilder[Autonomous Remedial Content Builder]
 ```
@@ -62,10 +67,13 @@ Edaad's agents are not simple instruction-following UI scripts; they are **deep-
 
 ## 🚀 Key Technologies Used
 
-1. **Gemini 2.0 Flash**: Powers real-time low-latency chat interactions, diagnostic analysis, and structured course module JSON generations.
-2. **Structured JSON Output**: Ensures 100% deterministic parsing in production systems, utilizing Google's schema restrictions.
-3. **Gemini Tool Calls (Function Calling)**: Seamlessly integrates AI reasoning with database operations, bridging the gap between natural language interaction and system execution.
-4. **Supabase Realtime & WebSockets**: Enables instant, secure, real-time synchronization between student diagnostic results and the teacher's monitoring dashboard.
+1. **Google Gen AI SDK (`@google/genai`)**: The primary SDK used to invoke Gemini models (2.0 Flash & 2.5 Flash). All agent calls go through this SDK, enforcing structured JSON schemas for deterministic, parse-safe outputs.
+2. **Gemini 2.0 Flash / 2.5 Flash**: Powers real-time low-latency Socratic dialogue, diagnostic analysis, and structured course module generation. `thinkingBudget` is tuned per-agent for cost-quality optimization.
+3. **Structured JSON Output (Response Schema)**: Enforces 100% deterministic JSON parsing in production. Each agent has its own schema — `socraticTutorSchema` and `diagnosticAnalyzerSchema` — ensuring reliable field extraction.
+4. **Gemini Native Function Calling (Tool Use)**: The Diagnostician Agent uses `functionDeclarations` to trigger `triggerRemedialSupport` as a native tool call — bridging AI reasoning directly to database operations without string parsing.
+5. **Supabase Edge Functions (Deno)**: Serve as the secure serverless orchestration layer between the Angular frontend and the Gemini API. The `ai-orchestrator` function routes all agent calls and manages model selection, caching, and fallback logic.
+6. **Supabase Realtime & WebSockets**: Enables instant, secure, real-time synchronization between student diagnostic events and the teacher's monitoring dashboard via PostgreSQL RPC + WebSocket broadcast.
+7. **Angular 20 (Signal-based Reactive Frontend)**: The client-side framework orchestrating both agent interfaces (Teacher Screen & Student Screen) with fine-grained reactive state management via Angular Signals.
 
 ---
 
