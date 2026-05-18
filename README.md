@@ -17,10 +17,10 @@ Our implementation coordinates two main cooperative agents using **Gemini API Fu
 graph TD
     Student[Student Query] --> Angular[Angular Frontend]
     Angular -->|Supabase Functions SDK| EdgeFn[Supabase Edge Function: ai-orchestrator]
-    EdgeFn -->|@google/genai SDK| Gemini[Gemini API: gemini-2.0-flash / 2.5-flash]
+    EdgeFn -->|Google GenAI SDK| Gemini[Gemini API: gemini-2.0-flash and 2.5-flash]
     Gemini -->|Structured JSON Response| Socrates[Socrates-Edaad: Socratic Tutor Agent]
     Socrates -->|1. Socratic response to student| Student
-    Socrates -->|2. dialogue metadata & note| Diagnostician[Diagnostician-Edaad: Diagnostic Agent]
+    Socrates -->|2. dialogue metadata and note| Diagnostician[Diagnostician-Edaad: Diagnostic Agent]
     Diagnostician -->|3. evaluates knowledge gaps| Orchestrator[Edaad AI Orchestrator]
     Orchestrator -->|4. Gemini Function Call triggers| Supabase[Supabase Realtime Database]
     Supabase -->|5. push telemetry| Teacher[Teacher Screen: Real-Time Live Monitoring]
