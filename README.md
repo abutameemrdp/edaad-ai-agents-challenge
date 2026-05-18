@@ -15,16 +15,35 @@ Our implementation coordinates two main cooperative agents using **Gemini API Fu
 
 ```mermaid
 graph TD
-    Student[Student Query] --> Angular[Angular Frontend]
-    Angular -->|Supabase Functions SDK| EdgeFn[Supabase Edge Function: ai-orchestrator]
-    EdgeFn -->|Google GenAI SDK| Gemini[Gemini API: gemini-2.0-flash and 2.5-flash]
-    Gemini -->|Structured JSON Response| Socrates[Socrates-Edaad: Socratic Tutor Agent]
-    Socrates -->|1. Socratic response to student| Student
-    Socrates -->|2. dialogue metadata and note| Diagnostician[Diagnostician-Edaad: Diagnostic Agent]
-    Diagnostician -->|3. evaluates knowledge gaps| Orchestrator[Edaad AI Orchestrator]
-    Orchestrator -->|4. Gemini Function Call triggers| Supabase[Supabase Realtime Database]
-    Supabase -->|5. push telemetry| Teacher[Teacher Screen: Real-Time Live Monitoring]
-    Supabase -->|6. triggers generation| RemedialBuilder[Autonomous Remedial Content Builder]
+    subgraph TeacherAgent [" Teacher Screen: Curriculum Creator Agent "]
+        Teacher[Teacher uploads PDF or topic] --> CourseBuilder[Smart Course Builder Agent]
+        CourseBuilder -->|Google GenAI SDK| GeminiCB[Gemini API: gemini-2.5-flash]
+        GeminiCB -->|Structured JSON| CourseIndex[Course Index and Outline]
+        GeminiCB -->|HTML Lesson Content| Lessons[Rich Lessons with Blockquotes]
+        GeminiCB -->|Escape Room JSON| Labs[Interactive Virtual Labs: NEOM and Al-Ula]
+        GeminiCB -->|Quiz Schema| Quizzes[Adaptive Quizzes and Assessments]
+        CourseIndex --> DB[Supabase Database]
+        Lessons --> DB
+        Labs --> DB
+        Quizzes --> DB
+        DB -->|Published Course| TeacherDashboard[Teacher Live Dashboard]
+    end
+
+    subgraph StudentAgent [" Student Screen: Socratic and Diagnostician Agents "]
+        Student[Student Query] --> Angular[Angular Frontend]
+        Angular -->|Supabase Functions SDK| EdgeFn[Supabase Edge Function: ai-orchestrator]
+        EdgeFn -->|Google GenAI SDK| Gemini[Gemini API: gemini-2.0-flash and 2.5-flash]
+        Gemini -->|Structured JSON Response| Socrates[Socrates-Edaad: Socratic Tutor Agent]
+        Socrates -->|1. Socratic response to student| Student
+        Socrates -->|2. dialogue metadata and note| Diagnostician[Diagnostician-Edaad: Diagnostic Agent]
+        Diagnostician -->|3. evaluates knowledge gaps| Orchestrator[Edaad AI Orchestrator]
+        Orchestrator -->|4. Gemini Function Call triggers| Supabase[Supabase Realtime Database]
+        Supabase -->|5. push telemetry| TeacherDashboard
+        Supabase -->|6. triggers private generation| RemedialBuilder[Autonomous Remedial Content Builder]
+        RemedialBuilder -->|7. private lesson saved for student only| DB
+    end
+
+    DB -->|course content served to student| Student
 ```
 ### 🧠 Deep-Reasoning Pedagogical Agents
 Edaad's agents are not simple instruction-following UI scripts; they are **deep-reasoning pedagogical agents** with cognitive intelligence. They analyze the structural and conceptual relationships in curricula deeply, diagnosing precisely where a student struggles, and adapt training materials dynamically to align with the student's unique learning curve.
