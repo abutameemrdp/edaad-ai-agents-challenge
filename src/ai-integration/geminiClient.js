@@ -1,16 +1,20 @@
 /**
- * Edaad AI - Google Vertex AI / AI Studio Client Integration
- * Designed for Google for Startups AI Agents Challenge (DevPost submission)
+ * Edaad AI - Google Gen AI Client Integration
+ * Powered by: Gemini 2.5 Flash (Current)
+ * Future-Ready: Engineered for seamless Gemini 3.0 upgrade
+ * Submission: Google for Startups AI Agents Challenge (Track 1: Build)
  */
 
 import { GoogleGenAI, Type } from '@google/genai';
 
-// Initialize the Google Gen AI client with Vertex AI or AI Studio credentials
+// Initialize the Google Gen AI client
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY || 'MOCK_GOOGLE_API_KEY_FOR_JUDGES_REVIEW'
 });
 
-const DEFAULT_MODEL = 'gemini-2.0-flash'; // Google's state-of-the-art fast multimodal model
+// Gemini 2.5 Flash — optimized for speed, reasoning, and structured output
+// Future: swap to 'gemini-3.0-flash' or 'gemini-3.0-pro' with zero refactoring
+const DEFAULT_MODEL = 'gemini-2.5-flash';
 
 /**
  * Invokes a specific agent within Edaad AI Multi-Agent System using structured schema.
