@@ -85,4 +85,4 @@ When **Socrates-Edaad** diagnoses a conceptual struggle and triggers a remedial 
 This codebase is optimized for **Track 2 (Optimizing Multi-Step Reasoning)** of the Google for Startups AI Agents Challenge, converting a basic Socratic prototype into a highly secure, reliable, production-ready system.
 
 * **Live Demo URL**: [https://edaad.io/gemini-demo](https://edaad.io/gemini-demo) (Live interactive split-screen sandbox)
-* **Code Repository**: [https://github.com/edaad-io/edaad-ai-agents-challenge](https://github.com/edaad-io/edaad-ai-agents-challenge) (GitHub Mirror)
+* **Code Repository**: [https://github.com/abutameemrdp/edaad-ai-agents-challenge](https://github.com/abutameemrdp/edaad-ai-agents-challenge) (GitHub Repository)
