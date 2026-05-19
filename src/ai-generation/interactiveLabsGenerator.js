@@ -15,7 +15,7 @@ import { Type } from '@google/genai';
  */
 export async function generateEscapeRoomScenario(topic, sourceText) {
   const prompt = `
-    You are Socrates-Edaad, an expert immersive game designer.
+    You are Labeeb-Edaad, an expert immersive game designer.
     Create a highly interactive educational "Escape Room" game scenario based on: "${topic}".
     
     **THEMATIC LOCALIZATION (SAUDI)**:

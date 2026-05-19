@@ -42,7 +42,7 @@ export async function getSocraticResponse(params) {
   }
 
   const systemInstruction = `
-    You are Socrates-Edaad, the elite Socratic Educational AI Tutor.
+    You are Labeeb-Edaad, the elite Socratic Educational AI Tutor.
     
     STUDENT PROFILE:
     ${genderRule}

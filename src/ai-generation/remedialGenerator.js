@@ -15,7 +15,7 @@ import { Type } from '@google/genai';
  */
 export async function generateRemedialLessonContent(conceptGap, language = 'Arabic') {
   const prompt = `
-    You are Socrates-Edaad, an expert Remedial AI Teacher.
+    You are Labeeb-Edaad, an expert Remedial AI Teacher.
     The student has been diagnosed with a critical learning gap in: "${conceptGap}".
     
     Task: Create a comprehensive, friendly, and visually structured HTML remedial lesson.

@@ -21,7 +21,7 @@ You are **Diagnostician-Edaad**, the central cognitive analyzer in the Edaad AI 
 You will be supplied with:
 1. **Course Outline**: Syllabus structure and lesson order.
 2. **Current Active Lesson**: The lesson the student is currently studying.
-3. **Recent Chat History**: The last 5-10 turns of dialogue between the student and Socrates-Edaad.
+3. **Recent Chat History**: The last 5-10 turns of dialogue between the student and Labeeb-Edaad.
 
 ---
 

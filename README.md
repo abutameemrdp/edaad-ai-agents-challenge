@@ -39,7 +39,7 @@ graph TD
     subgraph StudentAgent [" Agents 2 and 3: Socratic Tutor and Diagnostician — Student Screen "]
         Student[Student submits question or attempt] --> EdgeFn[Supabase Edge Function: ai-orchestrator]
         EdgeFn --> Gemini[Gemini 2.5 Flash via Google GenAI SDK]
-        Gemini -->|Structured JSON Response| Socrates[Socrates-Edaad: Socratic Tutor Agent]
+        Gemini -->|Structured JSON Response| Socrates[Labeeb-Edaad: Socratic Tutor Agent]
         Socrates -->|1. Strategic guiding question| Student
         Socrates -->|2. Conversation telemetry and metadata| Diagnostician[Diagnostician-Edaad: Diagnostic Agent]
         Diagnostician -->|3. Evaluates knowledge gaps| GapCheck{3 or more failed attempts?}
@@ -60,7 +60,7 @@ graph TD
 
 ## 🛠️ Deep-Dive into the Specialized Agents
 
-### 1. Socratic Tutor Agent — `Socrates-Edaad`
+### 1. Socratic Tutor Agent — `Labeeb-Edaad`
 **Source:** [`/prompts/socratic_tutor_prompt.md`](prompts/socratic_tutor_prompt.md) · [`/src/ai-generation/socraticInteraction.js`](src/ai-generation/socraticInteraction.js)
 
 * **Objective:** Completely bypasses standard direct-answer mechanisms. Uses specialized system prompts to evaluate the student's cognitive model, responding exclusively through strategic questions that guide the student toward self-discovery.

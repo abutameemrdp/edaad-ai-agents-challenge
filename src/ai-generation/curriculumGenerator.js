@@ -17,7 +17,7 @@ import { Type } from '@google/genai';
  */
 export async function generateCourseStructure(courseTitle, sourceContent, language = 'Arabic') {
   const prompt = `
-    You are Socrates-Edaad, an expert curriculum designer and AI Agent.
+    You are Labeeb-Edaad, an expert curriculum designer and AI Agent.
     Task: Generate a JSON course structure for "${courseTitle}".
     Language: ${language}.
     
